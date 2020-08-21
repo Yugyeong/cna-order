@@ -13,14 +13,19 @@ public class Order {
     private Long id;
     private String productId;
     private Integer qty;
+    private String status;
 
-    @PostPersist
+
+	@PostPersist
     public void onPostPersist(){
         Ordered ordered = new Ordered();
         BeanUtils.copyProperties(this, ordered);
         ordered.publishAfterCommit();
-
-
+    }
+	
+	@PostUpdate
+    public void onPostUpdate(){
+        System.out.println("PostUpdate!!!!!");
     }
 
     @PreRemove
@@ -64,7 +69,13 @@ public class Order {
         this.qty = qty;
     }
 
+    public String getStatus() {
+		return status;
+	}
 
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 
 }
